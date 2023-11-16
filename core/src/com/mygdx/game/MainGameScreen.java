@@ -19,13 +19,16 @@ public class MainGameScreen extends BaseScreen{
     private Texture texturaJugador;
     private Texture texturaRoca;
     private Stage stage;
-    private ActorJugador jugador;
+
+      private ActorJugador jugador;
+
 
     private ActorRoca rocas;
     @Override
     public void show() {
 
         this.stage =new Stage();
+        this.stage.isDebugAll();
         this.jugador= new ActorJugador(texturaJugador);
         this.rocas= new ActorRoca(texturaRoca);
         this.stage.addActor(jugador);
@@ -34,6 +37,15 @@ public class MainGameScreen extends BaseScreen{
         this.rocas.setPosition(400,100);
     }
 
+    private void comprobarColisiones(){
+        if (jugador.isAlive() &&     jugador.getX() + jugador.getWidth()> rocas.getX()){
+            System.out.println("Colision detectada");
+            jugador.setAlive(false);
+            rocas.setAlive(false);
+        }
+
+
+    }
     @Override
     public void hide() {
         stage.dispose();
@@ -41,10 +53,11 @@ public class MainGameScreen extends BaseScreen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(5,0,5,1);
+        Gdx.gl.glClearColor(2,0,5,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        comprobarColisiones();
     }
 
     @Override

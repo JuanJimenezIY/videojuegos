@@ -8,8 +8,20 @@ public class ActorJugador extends Actor {
 
     private Texture texturaJ;
 
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    private boolean alive;
+
     public ActorJugador(Texture texturaJ) {
         this.texturaJ = texturaJ;
+        setSize(texturaJ.getWidth(),texturaJ.getHeight());
+        this.alive=true;
     }
 
     @Override
