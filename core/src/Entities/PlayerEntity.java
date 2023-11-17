@@ -28,7 +28,7 @@ public class PlayerEntity extends Actor {
 
         BodyDef def= new BodyDef();
         def.position.set(position);
-        def.type=BodyDef.BodyType.StaticBody;
+        def.type=BodyDef.BodyType.KinematicBody;
 
         body= world.createBody(def);
 
@@ -38,11 +38,18 @@ public class PlayerEntity extends Actor {
         polygonShape.dispose();
         setSize(Constants.pixelInMeter,Constants.pixelInMeter);
 
+
+
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        setPosition((body.getPosition().x-1)*pixelInMeter,body.getPosition().y*pixelInMeter);
+
+        float velocidadY= body.getLinearVelocity().y;
+        body.setLinearVelocity(4,velocidadY);
+        setPosition((body.getPosition().x-10)*pixelInMeter,body.getPosition().y*pixelInMeter);
         batch.draw(texture,getX(),getY(),getWidth(),getHeight());
+
     }
+
 }

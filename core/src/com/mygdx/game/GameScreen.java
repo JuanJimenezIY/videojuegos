@@ -31,8 +31,10 @@ public class GameScreen extends BaseScreen{
     @Override
     public void show() {
         Texture playerTexture= game.getManager().get("dino100.png");
-        player= new PlayerEntity(world,playerTexture,new Vector2(2,0.8f));
+        player= new PlayerEntity(world,playerTexture,new Vector2(2,0.9f));
         stage.addActor(player);
+
+
 
         Texture obstaculo= game.getManager().get("roka.png");
         obs= new Obstaculo(world,obstaculo,new Vector2(5,0.7f));
@@ -53,11 +55,14 @@ public class GameScreen extends BaseScreen{
     @Override
     public void render(float delta) {
         super.render(delta);
-        Gdx.gl.glClearColor(1,0,0,1);
+
+
+        Gdx.gl.glClearColor(0,1,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         world.step(delta,6,2);
         stage.draw();
+
 
     }
 
