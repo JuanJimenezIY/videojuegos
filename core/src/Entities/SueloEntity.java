@@ -34,8 +34,9 @@ public class SueloEntity extends Actor {
         body= world.createBody(def);
 
         PolygonShape polygonShape= new PolygonShape();
-        polygonShape.setAsBox(50,1);
+        polygonShape.setAsBox(30,1);
         fixture= body.createFixture(polygonShape,1);
+        fixture.setUserData("suelo");
         polygonShape.dispose();
         setSize(Constants.pixelInMeter,Constants.pixelInMeter);
 
@@ -43,7 +44,11 @@ public class SueloEntity extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        setPosition((body.getPosition().x)*pixelInMeter,body.getPosition().y*pixelInMeter);
+        setPosition((body.getPosition().x)*pixelInMeter,body.getPosition().y+0.5f*pixelInMeter);
         batch.draw(texture,getX(),getY(),getWidth()*10,getHeight());
+    }
+    public void liberar(){
+        body.destroyFixture(fixture);
+        world.destroyBody(body);
     }
 }

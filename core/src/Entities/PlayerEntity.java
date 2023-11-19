@@ -16,7 +16,34 @@ public class PlayerEntity extends Actor {
     private Texture texture;
 
     private World world;
+
+    public Boolean getAlive() {
+        return alive;
+    }
+
+    public void setAlive(Boolean alive) {
+        this.alive = alive;
+    }
+
+    private Boolean alive=true;
+    public Body getBody() {
+        return body;
+    }
+
+    public void setBody(Body body) {
+        this.body = body;
+    }
+
     private Body body;
+
+    public Fixture getFixture() {
+        return fixture;
+    }
+
+    public void setFixture(Fixture fixture) {
+        this.fixture = fixture;
+    }
+
     private Fixture fixture;
 
 
@@ -28,13 +55,14 @@ public class PlayerEntity extends Actor {
 
         BodyDef def= new BodyDef();
         def.position.set(position);
-        def.type=BodyDef.BodyType.KinematicBody;
+        def.type=BodyDef.BodyType.DynamicBody;
 
         body= world.createBody(def);
 
         PolygonShape polygonShape= new PolygonShape();
-        polygonShape.setAsBox(1,1);
+        polygonShape.setAsBox(0.4f,0.4f);
         fixture= body.createFixture(polygonShape,1);
+        fixture.setUserData("player");
         polygonShape.dispose();
         setSize(Constants.pixelInMeter,Constants.pixelInMeter);
 
@@ -47,9 +75,13 @@ public class PlayerEntity extends Actor {
 
         float velocidadY= body.getLinearVelocity().y;
         body.setLinearVelocity(4,velocidadY);
-        setPosition((body.getPosition().x-10)*pixelInMeter,body.getPosition().y*pixelInMeter);
+        setPosition((body.getPosition().x-1)*pixelInMeter,body.getPosition().y*pixelInMeter);
         batch.draw(texture,getX(),getY(),getWidth(),getHeight());
 
     }
 
+    public void liberar(){
+        body.destroyFixture(fixture);
+        world.destroyBody(body);
+    }
 }
